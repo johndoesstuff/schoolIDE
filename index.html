@@ -1,0 +1,174 @@
+<body style="margin:0;overflow:hidden;">
+	<script>
+		module = {};
+	</script>
+	<script src="ace.min.js"></script>
+	<div id="action">
+		<div id="actionfile">
+			<div id="upload" onclick="upload()" title="Upload" class="btn">^</div>
+			<div id="download" onclick="download()" title="Download File" class="btn">v</div>
+			<div id="downloadproject" onclick="downloadproject()" title="Download Project" class="btn">vv</div>
+			<div id="delete" onclick="del()" title="Delete Selected File" class="btn">-</div>
+			<div id="create" onclick="create()" title="Create File" class="btn">+</div>
+		</div>
+		<div id="actioneditor">
+			<div id="run" onclick="run()" class="btn">Run</div>
+			<div id="nextTheme" onclick="nextTheme()" class="btn" title="Next Theme">++</div>
+			<input id="currentTheme" class="txtInp"></input>
+			<div id="previousTheme" onclick="previousTheme()" class="btn" title="Previous Theme">--</div>
+		</div>
+		<div id="actionoutput">
+			<div id="expand" onclick="expand()" title="Open in New Window" class="btn">[|]</div>
+			<div id="cls" onclick="cls()" title="Clear Terminal" class="btn">==</div>
+		</div>
+	</div>
+	<div id="files"></div>
+	<div id="code"></div>
+	<div id="output">
+		<iframe id="frame"></iframe>
+		<div id="terminal"></div>
+	</div>
+	<div id="placeholder" style="width: 0vw; height: 50vh;display: block;"></div>
+	<script>
+		ace.config.set('basePath', 'ace');
+		editor = ace.edit(document.getElementById("code"), {
+			mode: "ace/mode/html",
+			selectionStyle: "text"
+		})
+		editor.setOptions({
+			autoScrollEditorIntoView: true,
+			copyWithEmptySelection: true,
+			printMargin: false,
+		});
+		editor.setOption("mergeUndoDeltas", "always");
+		editor.setTheme("ace/theme/ambiance")
+	</script>
+	<script src="jszip.min.js"></script>
+	<script src="script.js"></script>
+	<style>
+		#output {
+			background: #121314;
+		}
+		#frame {
+			width: 35vw;
+			height: 47.5vh;
+		}
+		#upload {
+			width: 3vw;
+		}
+		#delete {
+			width: 3vw;
+		}
+		#download {
+			width: 3vw;
+		}
+		#downloadproject {
+			width: 3vw;
+		}
+		#create {
+			width: 3vw;
+		}
+		#actionfile {
+			background: #25282B;
+			width: 15vw;
+			height: 5vh;
+			float: left;
+		}
+		#actioneditor {
+			width: 50vw;
+			height: 5vh;
+			float: left;
+		}
+		#actionoutput {
+			background: #25282B;
+			width: 35vw;
+			height: 5vh;
+			float: left;
+		}
+		.btn:hover {
+			background: #565e66
+		}
+		.btn {
+			width: 5vw;
+			height: 5vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: white;
+			font-family: Courier;
+			user-select: none;
+			margin-left: auto;
+			margin-right: 0;
+			float: right;
+		}
+		.txtInp {
+			width: 5vw;
+			height: 5vh;
+			text-align: center;
+			vertical-align: middle;
+			color: white;
+			font-family: Courier;
+			user-select: none;
+			margin-left: auto;
+			margin-right: 0;
+			float: right;
+			background: transparent;
+			border: none;
+		}
+		.txtInp:hover {
+			background: #565e66
+		}
+		.txtInp:focus {
+			outline: none;
+			background: transparent;
+		}
+		.file {
+			width: 15vw;
+			text-align: left;
+		}
+		.fileName {
+			width: 10vw;
+			text-align: left;
+		}
+		.fileBtn {
+			width: 2.5vw;
+		}
+		.log {
+			color: white;
+			font-family: Courier;
+		}
+		#code {
+			width: 50vw;
+			height: 95vh;
+			float:left;
+		}
+		#files {
+			width: 15vw;
+			height: 95vh;
+			float:left;
+			background: #18191B
+		}
+		#output {
+			width: 35vw;
+			height: 95vh;
+			float:left
+		}
+		#action {
+			background: #42484f;
+			width: 100vw;
+			height: 5vh;
+			float:left;
+			display: inline-block;
+		}
+		#terminal {
+			padding: 1vw;
+			height: 47.5vh;
+			overflow-y: auto;
+			background-color: #0B0B0C;
+		}
+		#frame {
+			border: none;
+			background-color: white;
+		}
+	</style>
+</body>
