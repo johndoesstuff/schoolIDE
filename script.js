@@ -98,6 +98,20 @@ function run() {
 	document.getElementById("frame").contentWindow.document.write(index);
 }
 
+function expand() {
+	if (!isNaN(currentFile)) files[currentFile][1] = editor.getValue();
+	updateFiles();
+	var newWindow = window.open('...');
+	var index = files.filter(e => e[0] == "index.html")[0][1];
+	var otherFiles = files.filter(e => e[0] != "index.html");
+	for (var i = 0; i < otherFiles.length; i++) {
+		var blob = new Blob([otherFiles[i][1]]);
+		var blobURI = URL.createObjectURL(blob);
+		index = index.split(otherFiles[i][0]).join(blobURI);
+	}
+	newWindow.document.write(index);
+}
+
 function updateFiles() {
 	while (document.getElementById("files").lastChild) {
         document.getElementById("files").removeChild(document.getElementById("files").lastChild);
