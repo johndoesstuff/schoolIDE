@@ -3,6 +3,7 @@
 		module = {};
 	</script>
 	<script src="ace.min.js"></script>
+	<script src="ext-language_tools.js"></script>
 	<div id="action">
 		<div id="actionfile">
 			<div id="upload" onclick="upload()" title="Upload" class="btn">^</div>
@@ -30,6 +31,8 @@
 	</div>
 	<div id="placeholder" style="width: 0vw; height: 50vh;display: block;"></div>
 	<script>
+	
+		ace.require("ace/ext/language_tools");
 		ace.config.set('basePath', 'ace');
 		editor = ace.edit(document.getElementById("code"), {
 			mode: "ace/mode/html",
@@ -39,6 +42,9 @@
 			autoScrollEditorIntoView: true,
 			copyWithEmptySelection: true,
 			printMargin: false,
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: false
 		});
 		editor.setOption("mergeUndoDeltas", "always");
 		editor.setTheme("ace/theme/ambiance")
@@ -136,6 +142,9 @@
 		.log {
 			color: white;
 			font-family: Courier;
+		}
+		.error {
+			color: #eb4034;
 		}
 		#code {
 			width: 50vw;

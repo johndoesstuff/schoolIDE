@@ -51,9 +51,12 @@ setTheme(0);
 
 window.onmessage = (e) => {
 	e = e.data;
+	var text = e.substr(1);
+	var type = e[0];
 	var log = document.createElement("div");
-	log.innerText = e;
+	log.innerText = text;
 	log.classList.add("log");
+	if (type == "e") log.classList.add("error");
 	document.getElementById("terminal").appendChild(log)
 }
 
@@ -121,8 +124,10 @@ function updateFiles() {
 		fileName.classList.add("txtInp");
 		fileName.classList.add("fileName");
 		fileName.value = files[i][0];
-		fileName.onkeydown = (e) => {
-			renameFile(e.target.fileId, fileName.value)
+		fileName.fileId = i;
+		fileName.onchange = (e) => {
+			e.target.blur();
+			renameFile(e.target.fileId, e.target.value)
 		}
 		var file = document.createElement("div");
 		file.classList.add("file");
@@ -149,6 +154,11 @@ function updateFiles() {
 		file.appendChild(fileName)
 		document.getElementById("files").appendChild(file);
 	}
+}
+
+function renameFile(e, name) {
+	console.log(e, name);
+	files[Number(e)][0] = name;
 }
 
 function create() {
@@ -210,7 +220,10 @@ window.files = [
 var addResult = add(3, 2);
 console.log(addResult);`],
 	["__consoleHandler.js", `console.log = (e) => {
-	window.top.postMessage(e, '*');
+	window.top.postMessage("c"+e, '*');
+};
+window.onerror = (e) => {
+	window.top.postMessage("e"+e, '*');
 };`],
 ]
 
