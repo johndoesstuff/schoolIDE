@@ -27,11 +27,12 @@
 	<div id="code"></div>
 	<div id="output">
 		<iframe id="frame"></iframe>
-		<div id="terminal"></div>
+		<div id="terminal">
+			<div id="terminalInput" contenteditable></div>
+		</div>
 	</div>
 	<div id="placeholder" style="width: 0vw; height: 50vh;display: block;"></div>
 	<script>
-	
 		ace.require("ace/ext/language_tools");
 		ace.config.set('basePath', 'ace');
 		editor = ace.edit(document.getElementById("code"), {
@@ -146,6 +147,9 @@
 		.error {
 			color: #eb4034;
 		}
+		.return {
+			color: #1FDE55;
+		}
 		#code {
 			width: 50vw;
 			height: 95vh;
@@ -174,6 +178,13 @@
 			height: 47.5vh;
 			overflow-y: auto;
 			background-color: #0B0B0C;
+		}
+		#terminalInput {
+			color: white;
+			font-family: Courier;
+		}
+		#terminalInput:focus {
+			outline: none;
 		}
 		#frame {
 			border: none;

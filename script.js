@@ -57,7 +57,9 @@ window.onmessage = (e) => {
 	log.innerText = text;
 	log.classList.add("log");
 	if (type == "e") log.classList.add("error");
-	document.getElementById("terminal").appendChild(log)
+	if (type == "d") cls();
+	if (type == "r") log.classList.add("return");
+	document.getElementById("terminal").insertBefore(log, document.getElementById("terminalInput"))
 }
 
 function setTheme(e) {
@@ -86,6 +88,16 @@ document.getElementById("frame").contentWindow.document.write(files.filter(e => 
 
 
 window.onbeforeunload = e => "";
+document.getElementById("terminal").onclick = () => {
+	document.getElementById("terminalInput").focus();
+}
+document.getElementById("terminalInput").onkeydown = (e) => {
+	if (e.key == "Enter") {
+		document.getElementById("frame").contentWindow.postMessage(document.getElementById("terminalInput").innerText);
+		document.getElementById("terminalInput").innerText = "";
+		e.preventDefault();
+	}
+}
 
 function run() {
 	if (!isNaN(currentFile)) files[currentFile][1] = editor.getValue();
@@ -183,7 +195,7 @@ function delFile(e) {
 }
 
 function cls() {
-	document.getElementById("terminal").innerHTML = "";
+	Array.from(document.getElementById("terminal").children).filter(e => e.id != "terminalInput").map(e => e.parentNode.removeChild(e));
 }
 
 function downloadproject() {
@@ -219,12 +231,22 @@ window.files = [
 
 var addResult = add(3, 2);
 console.log(addResult);`],
-	["__consoleHandler.js", `console.log = (e) => {
+	["__consoleHandler.js", `//dont touch unless you know what youre doing
+console.log = (e) => {
 	window.top.postMessage("c"+e, '*');
 };
 window.onerror = (e) => {
 	window.top.postMessage("e"+e, '*');
-};`],
+};
+console.clear = () => {
+	window.top.postMessage("d", '*');
+};
+window.onmessage = (e) => {
+	e = e.data;
+	console.log("> " + e);
+	window.top.postMessage("r"+JSON.stringify(eval(e), "\\\\n", "\\\\t"), "*");
+};
+console.clear();`],
 ]
 
 updateFiles();
